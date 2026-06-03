@@ -148,9 +148,9 @@ section#about {
 .p1-desc {
     margin-top: 20px;
     max-width: 450px;
-}
+}  
 
-/* Tech-stack Section */
+/* --- Tech-stack Section ---  */
 .tech-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -164,6 +164,35 @@ section#about {
     border: 1px solid #a19a9a;
     border-radius: 8px;
     background-color: #fff;
+}
+
+/* --- Project Section --- */
+.projects-container {
+    display: grid;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.project-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    background-color: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    padding: 50px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
 }
 
 /* --- Contact Section --- */
