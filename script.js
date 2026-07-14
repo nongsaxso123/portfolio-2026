@@ -9,7 +9,7 @@ fetch(`https://api.github.com/users/${githubUsername}/repos`)
         projectContainer.innerHTML = '';
 
         repos.forEach(repo => {
-            // คัดเอาเฉพาะโปรเจกต์เอง (ไม่นับอันที่ไปกด Fork คนอื่นมา)
+            // คัดเอาเฉพาะโปรเจกต์ตัวเอง
             if (!repo.fork) {
                 const cardHTML = `
                     <div class="project-card">
