@@ -14,6 +14,7 @@
     --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.08);
     --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.12);
     --transition: 0.25s ease;
+    --header-height: 70px;
 }
 
 * {
@@ -22,6 +23,10 @@
     padding: 0;
     box-sizing: border-box;
 
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 /* สำหรับตัวบาง (Light) */
@@ -34,7 +39,6 @@
 /* สำหรับตัวปกติ (Regular) */
 @font-face {
     font-family: 'Futura';
-    /* ใช้ชื่อเดิม */
     src: url('fonts/FuturaCyrillicBook.ttf') format('truetype');
     font-weight: 400;
     /* 400 คือค่ามาตรฐานของตัวปกติ */
@@ -43,14 +47,12 @@
 /* สำหรับตัวหนา (Bold) */
 @font-face {
     font-family: 'Futura';
-    /* ใช้ชื่อเดิมเป๊ะๆ */
     src: url('fonts/FuturaCyrillicBold.ttf') format('truetype');
     font-weight: 700;
 }
 
 @font-face {
     font-family: 'Futura';
-    /* ใช้ชื่อเดิมเป๊ะๆ */
     src: url('fonts/FuturaCyrillicExtraBold.ttf') format('truetype');
     font-weight: 800;
 }
@@ -141,6 +143,7 @@ section {
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
     transition: box-shadow var(--transition);
+    scroll-margin-top: var(--header-height);
 
 }
 
@@ -172,20 +175,51 @@ section h1::after {
    4. COMPONENTS
    ========================================= */
 
-/* --- Profile Section --- */
-section#about {
+/* --- Hero / Landing Section --- */
+section.hero {
+    position: relative;
+    overflow: hidden;
+    min-height: calc(100vh - var(--header-height));
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 50px;
-
-    flex-wrap: wrap;
-    /* รองรับจอเล็ก */
+    justify-content: center;
+    text-align: center;
+    background-color: transparent;
+    box-shadow: none;
 }
 
-.my-avatar {
-    width: 250px;
-    height: 250px;
+section.hero:hover {
+    box-shadow: none;
+}
+
+section.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 20% 20%, var(--accent-color-light), transparent 50%),
+        radial-gradient(circle at 80% 75%, var(--accent-color-light), transparent 50%);
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    max-width: 900px;
+    text-align: left;
+}
+
+.hero-figure {
+    flex-shrink: 0;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.hero-avatar {
+    width: 220px;
+    height: 220px;
     object-fit: cover;
     border-radius: 50%;
     border: 4px solid var(--accent-color);
@@ -193,35 +227,158 @@ section#about {
     transition: transform var(--transition);
 }
 
-.my-avatar:hover {
+.hero-avatar:hover {
     transform: scale(1.05) rotate(-2deg);
 }
 
-.p1-name {
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1.1;
-    color: var(--primary-color);
+.hero-greeting,
+.hero-name,
+.hero-role,
+.hero-desc,
+.hero-cta {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
 }
 
-.p1-name .name {
+.hero-greeting {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent-color-dark);
+}
+
+.hero-name {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 10px 0;
+    color: var(--primary-color);
+    animation-delay: 0.15s;
+}
+
+.hero-name .name {
     color: var(--accent-color);
 }
 
-.p1-role {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 6px 16px;
-    font-size: 1rem;
+.hero-role {
+    font-size: 1.3rem;
     font-weight: 600;
-    color: var(--accent-color-dark);
-    background-color: var(--accent-color-light);
-    border-radius: 999px;
+    margin-bottom: 20px;
+    color: var(--accent-color);
+    animation-delay: 0.3s;
 }
 
-.p1-desc {
-    margin-top: 20px;
-    max-width: 450px;
+.hero-desc {
+    max-width: 500px;
+    margin: 0 0 35px;
+    animation-delay: 0.45s;
+}
+
+.hero-cta {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+    animation-delay: 0.6s;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform var(--transition), box-shadow var(--transition), background-color var(--transition);
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-color-dark);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--accent-color-dark);
+    border: 2px solid var(--accent-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--accent-color-light);
+    transform: translateY(-3px);
+}
+
+.scroll-down {
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    width: 22px;
+    height: 22px;
+    border-left: 3px solid var(--accent-color);
+    border-bottom: 3px solid var(--accent-color);
+    transform: translateX(-50%) rotate(-45deg);
+    animation: bounce 1.8s infinite;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateX(-50%) rotate(-45deg) translateY(0);
+    }
+
+    50% {
+        transform: translateX(-50%) rotate(-45deg) translateY(10px);
+    }
+}
+
+@media (max-width: 700px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-desc {
+        margin: 0 auto 35px;
+    }
+
+    .hero-cta {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-name {
+        font-size: 2.4rem;
+    }
+
+    .hero-role {
+        font-size: 1.1rem;
+    }
+}
+
+/* --- About Section --- */
+.about-text {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 /* --- Tech-stack Section ---  */
